@@ -10,9 +10,12 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
     String title;
-    String author;
+    @OneToOne
+    Publisher publisher;
     String isbn;
 
+    public Book() {
+    }
 
     @ManyToMany
     @JoinTable(name = "author_book", joinColumns =@JoinColumn(name = "book_id"),inverseJoinColumns = @JoinColumn(name = "author_id"))
@@ -22,17 +25,17 @@ public class Book {
         this.authors = authors;
     }
 
-    public Book(String title, String author, String isbn, Set<Author> authors) {
+    public Book(String title, String isbn, Publisher publisher, Set<Author> authors) {
         this.title = title;
-        this.author = author;
+        this.publisher = publisher;
         this.isbn = isbn;
         this.authors = authors;
     }
 
-    public Book(String title, String author, String isbn) {
+    public Book(String title, String isbn, Publisher publisher) {
 
         this.title = title;
-        this.author = author;
+        this.publisher = publisher;
         this.isbn = isbn;
     }
     public String getTitle() {
@@ -44,12 +47,12 @@ public class Book {
         this.title = title;
     }
 
-    public String getAuthor() {
-        return author;
+    public Publisher getPublisher() {
+        return publisher;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
     }
 
     public String getIsbn() {
@@ -92,7 +95,7 @@ public class Book {
         return "Book{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", author='" + author + '\'' +
+                ", publisher='" + publisher + '\'' +
                 ", isbn='" + isbn + '\'' +
                 ", authors=" + authors +
                 '}';
